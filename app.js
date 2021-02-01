@@ -24,8 +24,10 @@ var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var detailsRouter = require('./routes/details');
 var accessoryRouter = require('./routes/attach');
-
-
+var aboutRouter = require('./routes/about');
+var loginRouter = require('./routes/login');
+var registerRouter = require('./routes/register');
+// var updatedRouter = require('/routes/details');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,7 +43,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);//authentication - not using now
 app.use('/create', createRouter);
 app.use('/details', detailsRouter);
-app.use('/accessory', accessoryRouter);
+// app.use('/details/', updatedRouter);
+app.use('/attach', accessoryRouter);
+app.use('/about', aboutRouter);
+app.use('/login', loginRouter);
+app.use('/register', registerRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

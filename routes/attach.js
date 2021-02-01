@@ -8,7 +8,7 @@ router.get('/:id', function(req, res, next) {
   Cube.findOne({_id: req.params.id}).populate('accessories') 
   .then((response) => {
       console.log('Cube to attach accessory to ', response);
-      res.render('attachAccessory', { title: 'Attach Accessory', cube: response });
+      res.render('attach', { title: 'Attach Accessory', cube: response });
     })
   
 });

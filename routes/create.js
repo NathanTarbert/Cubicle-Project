@@ -43,8 +43,7 @@ router.post('/', function(req, res, next) {
             name: req.body.name,
             description: req.body.description,
             imageUrl: req.body.imageUrl,
-            difficulty: req.body.difficultyLevel,
-            
+            difficulty: req.body.difficultyLevel,            
         });
     
         //this is a promise...

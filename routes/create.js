@@ -6,61 +6,54 @@ const fs = require('fs');
 const Cube = require("../models/cube");
 const Accessory = require("../models/accessory");
 const {handlebars} = require('hbs');
-/* GET add cube page*/
+
+
+/*get the create cube page*/
 router.get('/', function(req, res, next) {
     res.render('create', { title: 'Create a Cube' });
 });
-
-router.get('/accessory', function(req, res, next) {
-    res.render('accessory', { title: 'Create Accessory'});
-});
-//make your form post request script
+//process the create cube form
 router.post('/', function(req, res, next) {
-    console.log('incoming', req.body);
-
-    const newCube = new Cube({
-        name: req.body.name,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        difficulty: req.body.difficultyLevel,
+    console.log('create cube form fired');
+    console.log(req.body);
+    let data = req.body;
+    let cube = new Cube({
+        name: data.name, 
+        description: data.description, 
+        imageUrl: data.imageUrl, 
+        difficulty: data.difficultyLevel,
         accessories: []
     });
-
-    //this is a promise...
-    newCube.save()
-    .then((result) => {
-        console.log(result);
+    cube.save()
+    .then((response) => {
+        console.log(response);
         res.redirect('/');
-    })
-        .catch((err) => {
-        res.send(err);
-    });
-
-    router.post('/accessory', function(req, res, next) {
-        console.log('incoming form submission', req.body);
-    
-        const newCube = new Cube({
-            name: req.body.name,
-            description: req.body.description,
-            imageUrl: req.body.imageUrl,
-            difficulty: req.body.difficultyLevel,            
-        });
-    
-        //this is a promise...
-        newCube.save()
-        .then((result) => {
-            console.log(result);
-            res.redirect('/');
-        })
-            .catch((err) => {
-            res.send(err);
-        });
     });
 });
-
+//create a cube accessory - runs on base of /create file, no need to put the /creat/ before
+//don't need a separate accessory route on the app.js file because it runs under the create router, just need  it here as a .get /new file name
+router.get('/accessory', function(req, res, next) {
+    res.render('createAccessory', { title: 'Create Cube Accessory'});
+});
+//process the add accessory form
+router.post('/accessory', function(req, res, next) {
+    console.log('create accessory post');
+    console.log('incoming form submission', req.body);
+    let data = req.body;
+    const accessory = new Accessory({
+        name: data.name,
+        description: data.description,
+        imageUrl: data.imageUrl,
+        cubes: []
+    });
+    //this is a promise...save the accessory that is created
+    accessory.save()
+    .then((response) => {
+        console.log(response);
+        res.redirect('/');
+        })
+        .catch((err) => {
+            res.send(err);
+        });
+});
 module.exports = router;
-
-
-
-
-

@@ -26,7 +26,9 @@ var detailsRouter = require('./routes/details');
 var accessoryRouter = require('./routes/attach');
 var aboutRouter = require('./routes/about');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
+var cookiesRouter = require('./routes/cookies');
 // var updatedRouter = require('/routes/details');
 
 // view engine setup
@@ -47,7 +49,9 @@ app.use('/details', detailsRouter);
 app.use('/attach', accessoryRouter);
 app.use('/about', aboutRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
+app.use('/cookies', cookieParser);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

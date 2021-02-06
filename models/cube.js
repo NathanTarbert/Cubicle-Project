@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 const cubeSchema = new Schema({
   name: String,
-  description: String,
   imageUrl: String,
-  difficulty: Number
+  description: String,  
+  difficulty: Number,
+  accessories: [{type: Schema.Types.ObjectId, ref: 'Accessory'}]
 });
 
 const Cube = mongoose.model('Cube', cubeSchema);

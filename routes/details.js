@@ -3,10 +3,6 @@ var router = express.Router();
 const Accessory = require('../models/accessory');
 const Cube = require('../models/cube');
 
-router.get('/update', function(req, res, next) {
-  res.render('update', { title: 'Updated Details Page'});
-});
-
 /* GET users listing. */
 router.get('/:id', function(req, res, next) {
   let id = req.params.id;

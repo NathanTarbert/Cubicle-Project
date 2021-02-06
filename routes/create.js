@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const cubes = require('../config/database.json');
-const cubesPath = './config/database.json';
-const fs = require('fs');
 const Cube = require("../models/cube");
 const Accessory = require("../models/accessory");
 const {handlebars} = require('hbs');
@@ -42,8 +39,8 @@ router.post('/accessory', function(req, res, next) {
     let data = req.body;
     const accessory = new Accessory({
         name: data.name,
-        description: data.description,
         imageUrl: data.imageUrl,
+        description: data.description,        
         cubes: []
     });
     //this is a promise...save the accessory that is created

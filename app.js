@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const hbs = require('hbs');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 var app = express();
 //mongoose connection
@@ -23,13 +25,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var detailsRouter = require('./routes/details');
-var accessoryRouter = require('./routes/attach');
+// var accessoryRouter = require('./routes/attach');
 var aboutRouter = require('./routes/about');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 var cookiesRouter = require('./routes/cookies');
-// var updatedRouter = require('/routes/details');
+var attachAccessoriesRouter = require('./routes/attachAccessory');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,8 +47,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);//authentication - not using now
 app.use('/create', createRouter);
 app.use('/details', detailsRouter);
-// app.use('/details/', updatedRouter);
-app.use('/attach', accessoryRouter);
+app.use('/attachAccessory/', attachAccessoriesRouter);
+// app.use('/attach', accessoryRouter);
 app.use('/about', aboutRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);

@@ -2,13 +2,13 @@
 <div class="form">
   <form action="/create/" method="POST">
     <label for="name">Name</label>
-    <input type="text" id="name" name="name">
+    <input type="text" id="name" name="name" required>
     <label for="name">Description</label>
-    <textarea id="name" name="description"></textarea>
+    <textarea id="name" required name="description"></textarea>
     <label for="image">ImageUrl</label>
-    <input type="text" id="image" name="imageUrl">
+    <input type="text" id="image" name="imageUrl" required>
     <label for="difficulty">Difficulty</label>
-    <select id="difficulty" name="difficultyLevel">
+    <select id="difficulty" name="difficultyLevel" required>
       <option value="1">1 - Very Easy</option>
       <option value="2">2 - Easy</option>
       <option value="3">3 - Medium (Standard 3x3)</option>
@@ -19,3 +19,26 @@
     <input type="submit" value="Create">
   </form>
 </div>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+</script>

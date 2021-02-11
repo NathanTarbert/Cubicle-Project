@@ -5,7 +5,11 @@ const Cube = require('../models/cube');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Cube.find().then((cube) => {
-    res.render('index', {title:"Cubicle", cube: cube});
+    res.render('index', {title:"Cubicle", cube: cube , user: req.user});
   });
+});
+router.get('/logout', function(req, res, next) {
+  req.logOut();
+  res.redirect('/');
 });
 module.exports = router;

@@ -1,26 +1,64 @@
 var express = require('express');
-const { restart } = require('nodemon');
-var router = express.Router();
+var passport = require('passport');
 var User = require('../models/user');
-const bycrypt = require('bcrypt'); 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.render('register', { title: 'Please Register' });
+var router = express.Router();
+const { body, validationResult } = require('express-validator');
+
+router.get('/', function(req, res) {
+    res.render('register', { title: 'Please Register' , user: req.user });
 });
 
-router.post('/', async function(req, res, next) {
-    console.log('Register is working', req.body);
-    
-    const user = new User(req.body);
+router.post('/',[
+    body('username')
+        .trim()
+        .isLength({min: 5})
+        .withMessage('Username Must Be At Least 5 Characters Long'),
+    body('password')
+        .trim()
+        .isLength({min: 8})
+        .withMessage('Password Must Be At Least 8 Characters Long'),
+    body('repeatPassword')
+        .trim()
+    .custom((value, {req}) => {
+        if(value !== req.body.password){
+            throw new Error('The Passwords do not match');
+        }
+        return true;
+    })
+], async (req, res, next) => {
     try {
-       await user.save();
-       const token = await user.generateAuthToken();
-       res.status(201).send({ user, token });
-      
-    } catch (err) {
-        res.status(400).send(err);
+        var displayErr;
+        const errors = validationResult(req);
+        console.log(errors);
+        if(!errors.isEmpty()){
+            errors.array().forEach(error => {
+                displayErr = error.msg;
+                // console.log(displayErr);                
+            });
+            res.render('register', {errors: errors.array()});
+            return;
+        } 
+        let newUser = new User({ username: req.body.username, password: req.body.password});
+        let validateErrs = newUser.validateSync();  
+        if(validateErrs == undefined && req.body.password === req.body.repeatPassword){
+            User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                passport.authenticate('local')(req, res, function () {
+                    req.session.save(function(err) {
+                        if (err) {
+                            return next(err);
+                        }
+                        // console.log('the User is', user);
+                        res.redirect('/');
+                    });
+                });
+            }        
+        });        
+    } 
+    }catch(err) {
+        console.log(err);
     }
 });
 module.exports = router;
-
-

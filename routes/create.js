@@ -7,12 +7,12 @@ const {handlebars} = require('hbs');
 
 /*get the create cube page*/
 router.get('/', function(req, res, next) {
-    res.render('create', { title: 'Create a Cube' });
+    res.render('create', { title: 'Create a Cube' , user : req.user });
 });
 //process the create cube form
 router.post('/', function(req, res, next) {
-    console.log('create cube form fired');
-    console.log(req.body);
+    // console.log('create cube form fired');
+    // console.log(req.body);
     let data = req.body;
     let cube = new Cube({
         name: data.name, 
@@ -30,7 +30,7 @@ router.post('/', function(req, res, next) {
 //create a cube accessory - runs on base of /create file, no need to put the /creat/ before
 //don't need a separate accessory route on the app.js file because it runs under the create router, just need  it here as a .get /new file name
 router.get('/accessory', function(req, res, next) {
-    res.render('createAccessory', { title: 'Create Cube Accessory'});
+    res.render('createAccessory', { title: 'Create Cube Accessory' , user: req.user});
 });
 //process the add accessory form
 router.post('/accessory', function(req, res, next) {
@@ -53,4 +53,6 @@ router.post('/accessory', function(req, res, next) {
             res.send(err);
         });
 });
+
+
 module.exports = router;

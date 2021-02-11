@@ -1,9 +1,9 @@
 <title>{{title}}</title>
 <h1>Attach a new accessory</h1>
   <div class="form">
-    <h2>Rubiks Cube</h2>
+    <h2>{{cube.name}}</h2>
     <img class="cube" src="{{cube.imageUrl}}">
-    <form action='/attachAccessory/{{cube._id}}' method="Post">
+    <form action='/attach/accessory/{{cube._id}}' method="Post">
       {{#if dropdownAccessories}}
             <label for="accessory">Accessories</label>
             <select id="accessory" name="accessory">

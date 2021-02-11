@@ -7,6 +7,7 @@ const Accessory = require("../models/accessory");
 /*get the attach accessory page*/
 router.get('/:id', function(req, res, next) {
     let id = req.params.id;
+    console.log('the id is', id);
     Cube.findOne({_id: id}).populate('accessories')
       .then((results) => {
 
@@ -15,7 +16,7 @@ router.get('/:id', function(req, res, next) {
         .then((foundAccessories) => {
             let dropdownAccessories = foundAccessories
             .filter(acc => !idArr.includes(acc._id));
-            res.render('AttachAccessory', { title: 'Attach Accessory', cube: results, dropdownAccessories: dropdownAccessories});
+            res.render('AttachAccessory', { title: 'Attach Accessory', cube: results, dropdownAccessories: dropdownAccessories , user: req.user});
         });        
       }); 
 });

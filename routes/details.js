@@ -8,13 +8,14 @@ router.get('/:id', function(req, res, next) {
   let id = req.params.id;
   Cube.findOne({_id: id}).populate('accessories')
     .then((results) => {
-      console.log("The single cube results are ", results);
-      console.log("the accessories are ", results.accessories);
-      res.render('details', { title: 'These are the details', cube: results, accessories: results.accessories});
+      // console.log("The single cube results from details route are ", results);
+      // console.log("the accessories results from details route are ", results.accessories);
+      let accessories = results.accessories;
+      res.render('details', { title: 'These are the details', cube: results, accessories: accessories , user: req.user});
     }); 
   
   //console.log("the db cube is ", cube.find({}))
-  console.log("the id is ", id);
+  // console.log("the id is ", id);
 //  res.send('respond with a resource');
 });
 

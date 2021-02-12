@@ -1,11 +1,10 @@
 var express = require('express');
-const { Result } = require('express-validator');
 var router = express.Router();
 const Cube = require("../models/cube");
 
 router.get('/:id/', (req, res, next) => {
     let id = req.params.id;
-    console.log('edit id is', id);
+    // console.log('edit id is', id);
     Cube.findOne({_id: id})
         .then((foundCube) => {
              res.render('editCubePage', {cube: foundCube, user: req.user});
@@ -22,12 +21,13 @@ router.post('/:id', async (req, res) => {
         cube.difficulty = req.body.difficultyLevel,
         await cube.save();
         res.redirect(`/`);
-    }catch {
-        if (cube == null) {
-            res.redirect('/');
-        }else {
-             res.render('details', { cube: cube, errorMessage: 'Error Editing Cube'});
-        }       
+    }catch(err) {
+        if(err) throw err;
+            if (cube == null) {
+                res.redirect('/');
+            }else {
+                res.render('details', { cube: cube, errorMessage: 'Error Editing Cube'});
+            }       
     }     
 });
   module.exports = router;

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Cube = require('../models/cube');
+const passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

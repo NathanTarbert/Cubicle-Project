@@ -9,7 +9,12 @@
         {{#if user}}        <!--only logged in users see these links-->
             <a class="btn" href="/attach/accessory/{{cube._id}}">Attach</a><br>
             <a class="btn" href="/edit/{{cube._id}}">Edit</a>
-            <a class="btn" href="/delete/{{cube._id}}">Delete</a>
+            <!-- enctype must be set to the type you will parse before methodOverride() -->
+            <form method="POST" action="/delete/{{cube.id}}" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Delete Cube</button>
+            </form>
+            {{!-- <a class="btn" href="/delete/{{cube._id}}">Delete</a> --}}
         {{/if}}
     </div>
 </div>

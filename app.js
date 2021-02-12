@@ -8,6 +8,7 @@ const hbs = require('hbs');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 const { body, validationResult } = require('express-validator');
+const methodOverride = require('method-override');
 var app = express();
 
 //mongoose connection
@@ -53,6 +54,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 hbs.registerPartials("./views/partials");
 
+app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -71,6 +73,15 @@ app.use('/details', detailsRouter);
 app.use('/attach/accessory', attachAccessoriesRouter);
 app.use('/edit', editCubeRouter);
 
+//delete user
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

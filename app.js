@@ -48,6 +48,7 @@ var createRouter = require('./routes/create');
 var detailsRouter = require('./routes/details');
 var attachAccessoriesRouter = require('./routes/attachAccessory');
 var editCubeRouter = require('./routes/edit');
+var deleteRouter = require('./routes/delete');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -72,16 +73,8 @@ app.use('/create', createRouter);
 app.use('/details', detailsRouter);
 app.use('/attach/accessory', attachAccessoriesRouter);
 app.use('/edit', editCubeRouter);
+app.use('/delete', deleteRouter);
 
-//delete user
-app.use(methodOverride(function (req, res) {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    // look in urlencoded POST bodies and delete it
-    var method = req.body._method;
-    delete req.body._method;
-    return method;
-  }
-}));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

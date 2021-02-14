@@ -54,5 +54,4 @@ router.post('/accessory', function(req, res, next) {
         });
 });
 
-
 module.exports = router;

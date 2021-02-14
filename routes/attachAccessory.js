@@ -3,7 +3,6 @@ var router = express.Router();
 const Cube = require("../models/cube");
 const Accessory = require("../models/accessory");
 
-
 /*get the attach accessory page*/
 router.get('/:id', function(req, res, next) {
     let id = req.params.id;
@@ -20,6 +19,7 @@ router.get('/:id', function(req, res, next) {
         });        
       }); 
 });
+
 router.post('/:id', function(req, res, next) {
     let selAccId = req.body.accessory;
     let cubeId = req.params.id;

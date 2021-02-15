@@ -43,7 +43,7 @@ router.post('/',[
         if(validateErrs == undefined && req.body.password === req.body.repeatPassword){
             User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
             if (err) {
-                console.log(err);
+                res.render('register', {title: 'Please Register', err: err});
             } else {
                 passport.authenticate('local')(req, res, function () {
                     req.session.save(function(err) {
